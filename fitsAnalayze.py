@@ -71,7 +71,7 @@ def plotResults(x,y):
 if __name__ == '__main__':
     LOAD_FITS_PATH = './fits/*.fits'
     SAVE_CSV_NAME  = './result.csv'
-    ExportFlag = False # If ExportFlag is True, output a csv file.
+    CsvExportFlag = False # If ExportFlag is True, output a csv file.
 
     if(len(glob.glob(LOAD_FITS_PATH)) == 0):
         print(f"Exit the program because the fits file does not exist. => {LOAD_FITS_PATH}")
@@ -90,8 +90,8 @@ if __name__ == '__main__':
     # Calculate elapsed time
     print(f'Elapsed time ={time.time() - startTime} s.')
 
-    # Export
-    if(ExportFlag):
+    # CsvExport
+    if(CsvExportFlag):
         exportToCsvFile(x,y, SAVE_CSV_NAME)
 
     # Plot
