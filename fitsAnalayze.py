@@ -27,7 +27,7 @@ def getSenserPixelSize(fitspath):
     return(array_x, array_y)
 
 # Load files and number of files: n, then store to 3-D numpy array
-def loadFilesStore3DnumpyArray(fitspath, array_x,array_y):
+def loadFilesStore3DnumpyArray(fitspath, array_x, array_y):
     stack = np.empty((0,array_y,array_x))
     for img in glob.glob (fitspath):
         imdata = fits.getdata(img, ext = 0)
@@ -35,7 +35,7 @@ def loadFilesStore3DnumpyArray(fitspath, array_x,array_y):
     return(stack)
 
 # Calculate x,y
-def calculatePlotingPoint(stack):
+def calculatePlotingPoint(stack, array_x, array_y):
     # Calculate median and std.dev. of each pixel
     median = np.median(stack, axis = 0)
     stddev = np.std(stack, axis = 0,ddof = 0)
@@ -47,13 +47,13 @@ def calculatePlotingPoint(stack):
 
 # Export to csv file
 def exportToCsvFile(x,y,saveCsvname):
-    data = np.concatenate([x,y], 1)
-    np.savetxt(saveCsvname,data,delimiter = ',')
+    data = np.concatenate([x, y], 1)
+    np.savetxt(saveCsvname, data, delimiter = ',')
 
 # Plot results
-def plotResults(x,y):
+def plotResults(x, y):
     plt.style.use(astropy_mpl_style)
-    plt.scatter(x,y,s = 0.3, marker = '.', color = "blue")
+    plt.scatter(x, y, s = 0.3, marker = '.', color = "blue")
     plt.grid(which = "both", linewidth = 0.5, alpha = 0.1)
     plt.suptitle("Bias")
     plt.xlabel('Median')
@@ -83,7 +83,7 @@ if __name__ == '__main__':
     print(f'{np.shape(stack)[0]} files loaded.')
 
     # Calculate Ploting Point
-    x,y = calculatePlotingPoint(stack)
+    x,y = calculatePlotingPoint(stack, array_x, array_y)
     # Calculate elapsed time
     print(f'Elapsed time ={time.time() - startTime} s.')
 
