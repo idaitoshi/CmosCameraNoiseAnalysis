@@ -15,7 +15,6 @@ CMOS camera noise analysis program ver.1.0
 import matplotlib.pyplot as plt
 import numpy as np
 import glob
-import numpy as np
 from astropy.visualization import astropy_mpl_style
 from astropy.io import fits
 import time
@@ -51,7 +50,6 @@ def calculatePlotingPoint(stack):
 def exportToCsvFile(x,y,saveCsvname):
     data = np.concatenate([x,y], 1)
     np.savetxt(saveCsvname,data,delimiter = ',')
-
 
 # Plot results
 def plotResults(x,y):
