@@ -28,10 +28,10 @@ def getSenserPixelSize(fitspath):
 
 # Load files and number of files: n, then store to 3-D numpy array
 def loadFilesStore3DnumpyArray(fitspath, array_x, array_y):
-    stack = np.empty((0,array_y,array_x))
+    stack = np.empty((0, array_y, array_x))
     for img in glob.glob (fitspath):
         imdata = fits.getdata(img, ext = 0)
-        stack = np.append(stack,imdata[np.newaxis,:],axis = 0)
+        stack = np.append(stack, imdata[np.newaxis,:], axis = 0)
     return(stack)
 
 # Calculate x,y
@@ -68,8 +68,9 @@ def plotResults(x, y):
 if __name__ == '__main__':
     LOAD_FITS_PATH = './fits/*.fits'
     SAVE_CSV_NAME  = './result.csv'
-    CsvExportFlag = False # If ExportFlag is True, output a csv file.
+    CsvExportFlag = False # If CsvExportFlag is True, output a csv file.
 
+    # Check for the existence of fits files
     if(len(glob.glob(LOAD_FITS_PATH)) == 0):
         print(f"Exit the program because the fits file does not exist. => {LOAD_FITS_PATH}")
         exit()
