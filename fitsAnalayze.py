@@ -76,6 +76,10 @@ if __name__ == '__main__':
     SAVE_CSV_NAME  = './result.csv'
     ExportFlag = True # If ExportFlag is True, output a csv file.
 
+    if(len(glob.glob(LOAD_FITS_PATH)) == 0):
+        print(f"Exit the program because the fits file does not exist. => {LOAD_FITS_PATH}")
+        exit()
+
     # Load start time
     startTime = time.time()
 
