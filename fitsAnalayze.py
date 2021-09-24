@@ -13,13 +13,10 @@ CMOS camera noise analysis program ver.1.0
 """
 
 import matplotlib.pyplot as plt
-from matplotlib.pyplot import axis
 import numpy as np
 import glob
 import numpy as np
 from astropy.visualization import astropy_mpl_style
-from numpy.core.fromnumeric import shape, std
-from astropy.utils.data import get_pkg_data_filename
 from astropy.io import fits
 import time
 
@@ -74,7 +71,7 @@ def plotResults(x,y):
 if __name__ == '__main__':
     LOAD_FITS_PATH = './fits/*.fits'
     SAVE_CSV_NAME  = './result.csv'
-    ExportFlag = True # If ExportFlag is True, output a csv file.
+    ExportFlag = False # If ExportFlag is True, output a csv file.
 
     if(len(glob.glob(LOAD_FITS_PATH)) == 0):
         print(f"Exit the program because the fits file does not exist. => {LOAD_FITS_PATH}")
