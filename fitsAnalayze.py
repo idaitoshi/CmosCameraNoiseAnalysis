@@ -21,8 +21,7 @@ import time
 
 # Load sensor pixel size (array size)
 def getSenserPixelSize(fitspath):
-    for img in glob.glob (fitspath):
-        imdata = fits.getdata(img, ext = 0)
+    imdata = fits.getdata(glob.glob(fitspath)[0], ext = 0) # Get the x,y size of the first fits file found.
     array_y = np.shape(imdata)[0]
     array_x = np.shape(imdata)[1]
     return(array_x, array_y)
