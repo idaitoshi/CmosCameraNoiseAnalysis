@@ -74,18 +74,24 @@ def plotResults(x,y):
 if __name__ == '__main__':
     LOAD_FITS_PATH = './fits/*.fits'
     SAVE_CSV_NAME  = './result.csv'
+    ExportFlag = True # If ExportFlag is True, output a csv file.
 
     # Load start time
     startTime = time.time()
 
+    # Load Fits and Store data
     array_x, array_y = getSenserPixelSize(LOAD_FITS_PATH)
     stack = loadFilesStore3DnumpyArray(LOAD_FITS_PATH , array_x, array_y)
     print(f'{np.shape(stack)[0]} files loaded.')
 
+    # Calculate Ploting Point
     x,y = calculatePlotingPoint(stack)
     # Calculate elapsed time
     print(f'Elapsed time ={time.time() - startTime} s.')
 
-    exportToCsvFile(x,y, SAVE_CSV_NAME)
+    # Export
+    if(ExportFlag):
+        exportToCsvFile(x,y, SAVE_CSV_NAME)
 
+    # Plot
     plotResults(x,y)
