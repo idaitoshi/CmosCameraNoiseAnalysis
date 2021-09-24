@@ -5,6 +5,7 @@ CMOS camera noise analysis program ver.1.0
 ===========================================
 
 *By: so-nano-car inspired by Mr. "Apranat"*
+*URL:https://so-nano-car.com/noise-evaluation-of-qhy5iii174m
 *Arrange: Daitoshi
 
 *License: BSD*
