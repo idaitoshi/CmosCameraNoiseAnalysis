@@ -36,9 +36,12 @@ def getSenserPixelSize(fitspath):
 # Load files and number of files: n, then store to 3-D numpy array
 def loadFilesStore3DnumpyArray(fitspath, array_x, array_y):
     stack = np.empty((0, array_y, array_x))
-    for img in glob.glob (fitspath):
+    fitsFiles = glob.glob (fitspath)
+    fitsNum   = len(fitsFiles)
+    for i, img in enumerate(fitsFiles):
         imdata = fits.getdata(img, ext = 0)
         stack = np.append(stack, imdata[np.newaxis,:], axis = 0)
+        print(f"loadFitsFiles {i}/{fitsNum}")
     return(stack)
 
 # Calculate x,y
@@ -101,6 +104,7 @@ if __name__ == '__main__':
     array_x, array_y = getSenserPixelSize(load_fits_path)
     stack = loadFilesStore3DnumpyArray(load_fits_path , array_x, array_y)
     print(f'{np.shape(stack)[0]} files loaded.')
+    print(f'Elapsed time ={time.time() - startTime} s.')
 
     # Calculate Ploting Point
     x,y = calculatePlotingPoint(stack, array_x, array_y)
