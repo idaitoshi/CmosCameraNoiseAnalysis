@@ -11,9 +11,9 @@ CMOS camera noise analysis program ver.1.0
 *License: BSD*
 
 *プログラムの使用方法*
-パラメータを指定しない場合は、実行されたカレントディレクトリのサブディレクトリ./fits/ 以下の*.fitsファイルを処理対象とします
-一つ目のパラメータは、fitsファイルのパスとして解釈される パスの最後の文字は \ or / では無い状態で指定すること 例 c:\hoge\fits
-二つ目のパラメータは、グラフのタイトルとして解釈される 空白文字は入れずに、_ で代用すること 例 ASI294_Dark_gain300_30c_128fits
+コマンドライン引数を指定しない場合は、実行されたカレントディレクトリのサブディレクトリ./fits/ 以下の*.fitsファイルを処理対象とします
+一つ目の引数は、fitsファイルのパスとして解釈される パスの最後の文字は \ or / では無い状態で指定すること 例 c:\hoge\fits
+二つ目の引数は、グラフのタイトルとして解釈される 空白文字は入れずに、_ で代用すること 例 ASI294_Dark_gain300_30c_128fits
 """
 
 import matplotlib.pyplot as plt
@@ -71,15 +71,16 @@ def plotResults(x, y, title):
 
 # Main routine
 if __name__ == '__main__':
+    # デフォルトパラメータの設定
     DEFAULT_LOAD_FITS_PATH = './fits/*.fits'
     DEFAULT_SAVE_CSV_NAME  = './fits/result.csv'
     DEFAULT_TITLE          = "Bias"
-    CsvExportFlag = False # If CsvExportFlag is True, output a csv file.
-    # パラメータの指定無しの場合
     load_fits_path = DEFAULT_LOAD_FITS_PATH
     save_csv_path  = DEFAULT_SAVE_CSV_NAME
     title = DEFAULT_TITLE
+    CsvExportFlag = False # If CsvExportFlag is True, output a csv file.
 
+    # コマンドライン引数の処理
     args = sys.argv
     if(2 <= len(args)):
         load_fits_path = args[1] + '/*.fits'
