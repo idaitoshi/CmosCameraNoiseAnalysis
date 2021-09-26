@@ -10,6 +10,10 @@ CMOS camera noise analysis program ver.1.0
 
 *License: BSD*
 
+*プログラムの使用方法*
+パラメータを指定しない場合は、実行されたカレントディレクトリのサブディレクトリ./fits/ 以下の*.fitsファイルを処理対象とします
+一つ目のパラメータは、fitsファイルのパスとして解釈される パスの最後の文字は \ or / では無い状態で指定すること 例 c:\hoge\fits
+二つ目のパラメータは、グラフのタイトルとして解釈される 空白文字は入れずに、_ で代用すること 例 ASI294_Dark_gain300_30c_128fits
 """
 
 import matplotlib.pyplot as plt
