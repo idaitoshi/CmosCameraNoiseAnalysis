@@ -18,6 +18,7 @@ import glob
 from astropy.visualization import astropy_mpl_style
 from astropy.io import fits
 import time
+import sys
 
 # Load sensor pixel size (array size)
 def getSenserPixelSize(fitspath):
@@ -51,11 +52,11 @@ def exportToCsvFile(x,y,saveCsvname):
     np.savetxt(saveCsvname, data, delimiter = ',')
 
 # Plot results
-def plotResults(x, y):
+def plotResults(x, y, title):
     plt.style.use(astropy_mpl_style)
     plt.scatter(x, y, s = 0.3, marker = '.', color = "blue")
     plt.grid(which = "both", linewidth = 0.5, alpha = 0.1)
-    plt.suptitle("Bias")
+    plt.suptitle(title)
     plt.xlabel('Median')
     plt.ylabel('Std.dev.')
     plt.xscale("log")
@@ -66,21 +67,32 @@ def plotResults(x, y):
 
 # Main routine
 if __name__ == '__main__':
-    LOAD_FITS_PATH = './fits/*.fits'
-    SAVE_CSV_NAME  = './result.csv'
+    DEFAULT_LOAD_FITS_PATH = './fits/*.fits'
+    DEFAULT_SAVE_CSV_NAME  = './fits/result.csv'
+    DEFAULT_TITLE          = "Bias"
     CsvExportFlag = False # If CsvExportFlag is True, output a csv file.
+    # パラメータの指定無しの場合
+    load_fits_path = DEFAULT_LOAD_FITS_PATH
+    save_csv_path  = DEFAULT_SAVE_CSV_NAME
+    title = DEFAULT_TITLE
+
+    args = sys.argv
+    if(2 <= len(args)):
+        load_fits_path = args[1] + '/*.fits'
+    if(3 <= len(args)):
+        title = args[2]
 
     # Check for the existence of fits files
-    if(len(glob.glob(LOAD_FITS_PATH)) == 0):
-        print(f"Exit the program because the fits file does not exist. => {LOAD_FITS_PATH}")
+    if(len(glob.glob(load_fits_path)) == 0):
+        print(f"Exit the program because the fits file does not exist. => {load_fits_path}")
         exit()
 
     # Load start time
     startTime = time.time()
 
     # Load Fits and Store data
-    array_x, array_y = getSenserPixelSize(LOAD_FITS_PATH)
-    stack = loadFilesStore3DnumpyArray(LOAD_FITS_PATH , array_x, array_y)
+    array_x, array_y = getSenserPixelSize(load_fits_path)
+    stack = loadFilesStore3DnumpyArray(load_fits_path , array_x, array_y)
     print(f'{np.shape(stack)[0]} files loaded.')
 
     # Calculate Ploting Point
@@ -90,7 +102,7 @@ if __name__ == '__main__':
 
     # CsvExport
     if(CsvExportFlag):
-        exportToCsvFile(x,y, SAVE_CSV_NAME)
+        exportToCsvFile(x,y, save_csv_path)
 
     # Plot
-    plotResults(x,y)
+    plotResults(x,y,title)
