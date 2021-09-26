@@ -13,7 +13,9 @@ CMOS camera noise analysis program ver.1.0
 *プログラムの使用方法*
 コマンドライン引数を指定しない場合は、実行されたカレントディレクトリのサブディレクトリ./fits/ 以下の*.fitsファイルを処理対象とします
 一つ目の引数は、fitsファイルのパスとして解釈される パスの最後の文字は \ or / では無い状態で指定すること 例 c:\hoge\fits
-二つ目の引数は、グラフのタイトルとして解釈される 空白文字は入れずに、_ で代用すること 例 ASI294_Dark_gain300_30c_128fits
+二つ目の引数は、グラフのタイトルとして解釈される 空白文字は入れずに、_ で代用すること 例 ASI294_Dark_gain300_30c*128files
+コマンドライン例 
+python fitsAnalayze.py "C:\home\SharpCap Captures\2021-09-26\Capture\Dark" ASI294_Dark_gain300_30c*128files
 """
 
 import matplotlib.pyplot as plt
