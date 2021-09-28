@@ -34,14 +34,18 @@ def getSenserPixelSize(fitspath):
     return(array_x, array_y)
 
 # Load files and number of files: n, then store to 3-D numpy array
-def loadFilesStore3DnumpyArray(fitspath, array_x, array_y):
+def loadFilesStore3DnumpyArray(fitspath, array_x, array_y, fileLoadLimit=99999):
     stack = np.empty((0, array_y, array_x))
     fitsFiles = glob.glob (fitspath)
     fitsNum   = len(fitsFiles)
     for i, img in enumerate(fitsFiles):
+        readNum = i+1
         imdata = fits.getdata(img, ext = 0)
         stack = np.append(stack, imdata[np.newaxis,:], axis = 0)
-        print(f"loadFitsFiles {i}/{fitsNum}")
+        print(f"loadFitsFiles {readNum}/{fitsNum}")
+        if(fileLoadLimit <= readNum): # ファイル数読み込みの上限を超えていたらそこで処理打ち切り
+            print(f"fileLoadLimit=={fileLoadLimit}")
+            break
     return(stack)
 
 # Calculate x,y
@@ -80,6 +84,7 @@ if __name__ == '__main__':
     DEFAULT_LOAD_FITS_PATH = './fits/*.fits'
     DEFAULT_SAVE_CSV_NAME  = './fits/result.csv'
     DEFAULT_TITLE          = "Bias"
+    FILE_LOAD_LIMIT        = 32
     load_fits_path = DEFAULT_LOAD_FITS_PATH
     save_csv_path  = DEFAULT_SAVE_CSV_NAME
     title = DEFAULT_TITLE
@@ -102,7 +107,7 @@ if __name__ == '__main__':
 
     # Load Fits and Store data
     array_x, array_y = getSenserPixelSize(load_fits_path)
-    stack = loadFilesStore3DnumpyArray(load_fits_path , array_x, array_y)
+    stack = loadFilesStore3DnumpyArray(load_fits_path , array_x, array_y, FILE_LOAD_LIMIT)
     print(f'{np.shape(stack)[0]} files loaded.')
     print(f'Elapsed time ={time.time() - startTime} s.')
 
